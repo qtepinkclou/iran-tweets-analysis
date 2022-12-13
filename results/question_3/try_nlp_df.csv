@@ -1,0 +1,305 @@
+,tweets,sentiment,emotion,processed_tweets
+0,Don’t Let Them Stand Alone. The #women + Girls of Iran. The #IranianRegime is using live rounds to kill them in the streets every day #IranianWomen #WomanLifeFreedom #IranRevoIution #IranRevoIution2022 #IranProtests2022 #WomensRightsAreHumanRights https://t.co/b0RJFyuLCq,"negative    0.872835
+neutral     0.120743
+positive    0.006422
+dtype: float64","anger       0.881560
+joy         0.007872
+optimism    0.054842
+sadness     0.055727
+dtype: float64",Don’t Let Them Stand Alone. The #women + Girls of Iran. The #IranianRegime is using live rounds to kill them in the streets every day #IranianWomen #WomanLifeFreedom #IranRevoIution #IranRevoIution2022 #IranProtests2022 #WomensRightsAreHumanRights http
+1,"🇮🇷Mina Yagoubi, 33, a citizen of Arak, arrested in early November, was released on bail.
+The effects of the torture are evident on Mina's eyes and body.
+#IranProtests2022
+#Iran https://t.co/CcC0omjWEw","negative    0.713806
+neutral     0.273410
+positive    0.012784
+dtype: float64","anger       0.160401
+joy         0.021945
+optimism    0.025595
+sadness     0.792058
+dtype: float64","🇮🇷Mina Yagoubi, 33, a citizen of Arak, arrested in early November, was released on bail.
+The effects of the torture are evident on Mina's eyes and body.
+#IranProtests2022
+#Iran http"
+2,Tweeting isn’t enough! Social Media isn’t enough! Support #WomanLifeFreedom #IranProtests2022 #IranRevoIution2022                               Check local protest center: https://t.co/e6E6ODMa7t https://t.co/IpUJlDBi9p,"negative    0.398528
+neutral     0.482813
+positive    0.118659
+dtype: float64","anger       0.714236
+joy         0.009623
+optimism    0.221982
+sadness     0.054159
+dtype: float64",Tweeting isn’t enough! Social Media isn’t enough! Support #WomanLifeFreedom #IranProtests2022 #IranRevoIution2022                               Check local protest center: http http
+3,"There are at least two problems with this ethnic-based narrative:
+1- It plays into the hands of the Islamic Republic who claims that the protests are aimed at #Iran as a nation, not the government;
+2- It ignores the unique national/nationwide feature of #IranProtests2022 movement","negative    0.829890
+neutral     0.164414
+positive    0.005697
+dtype: float64","anger       0.890616
+joy         0.004501
+optimism    0.052734
+sadness     0.052148
+dtype: float64","There are at least two problems with this ethnic-based narrative:
+1- It plays into the hands of the Islamic Republic who claims that the protests are aimed at #Iran as a nation, not the government;
+2- It ignores the unique national/nationwide feature of #IranProtests2022 movement"
+4,"#Iranprotests2022 : Dec 2 — Zahedan, SE — #Iran 
+Massive crowd of locals are in the streets chanting anti-regime slogans. This is the 78th day of #IranRevolution.
+#مهسا_امینی
+#اعتراضات_سراسری https://t.co/W0VlBkDPda","negative    0.458482
+neutral     0.473956
+positive    0.067562
+dtype: float64","anger       0.718373
+joy         0.112985
+optimism    0.139193
+sadness     0.029449
+dtype: float64","#Iranprotests2022 : Dec 2 — Zahedan, SE — #Iran 
+Massive crowd of locals are in the streets chanting anti-regime slogans. This is the 78th day of #IranRevolution.
+
+ http"
+5,"#YasharTohidi , a political prisoner, was shot in both legs in the Evin prison fire. He is in critical condition but is being denied the necessary treatments. His life is in great danger.
+#YasharTohidi #ياشارـتوحیدی #SayTheirNames #IranProtests2022 #IranProrests https://t.co/xxlvqWiHxm","negative    0.927484
+neutral     0.069237
+positive    0.003278
+dtype: float64","anger       0.184036
+joy         0.008386
+optimism    0.031300
+sadness     0.776277
+dtype: float64","#YasharTohidi , a political prisoner, was shot in both legs in the Evin prison fire. He is in critical condition but is being denied the necessary treatments. His life is in great danger.
+#YasharTohidi  #SayTheirNames #IranProtests2022 #IranProrests http"
+6,"#Iranprotests2022
+#IranRevoIution: 22-year-old Negin Radfar was shot in the heart by the security forces during the protests in #Sanandaj.
+I send greetings to Negin Radfar and all the martyrs of the Iranian uprising, who sacrificed their lives for the freedom of #Iran
+#مهسا_امینی https://t.co/DNuJwCXgWu","negative    0.552572
+neutral     0.401029
+positive    0.046399
+dtype: float64","anger       0.312359
+joy         0.074871
+optimism    0.219828
+sadness     0.392942
+dtype: float64","#Iranprotests2022
+#IranRevoIution: 22-year-old Negin Radfar was shot in the heart by the security forces during the protests in #Sanandaj.
+I send greetings to Negin Radfar and all the martyrs of the Iranian uprising, who sacrificed their lives for the freedom of #Iran
+ http"
+7,"@melaniejoly Thank you, if you want to make a real impact now is the time to list the IRGC as a terrorist organization. #MahsaAmini #ArmitaAbbasi #IranProtests2022","negative    0.185354
+neutral     0.614289
+positive    0.200358
+dtype: float64","anger       0.613989
+joy         0.021918
+optimism    0.338621
+sadness     0.025473
+dtype: float64","@user Thank you, if you want to make a real impact now is the time to list the IRGC as a terrorist organization. #MahsaAmini #ArmitaAbbasi #IranProtests2022"
+8,"Workload sure is heavy at the regime-controlled news agency in #Iran! 
+
+➡️Read more https://t.co/x3EPNJJ0Ln
+
+#IranRevolution2022 #Iranians #IranProtests2022","negative    0.574781
+neutral     0.387337
+positive    0.037882
+dtype: float64","anger       0.810209
+joy         0.032480
+optimism    0.068270
+sadness     0.089041
+dtype: float64","Workload sure is heavy at the regime-controlled news agency in #Iran! 
+
+➡️Read more http
+
+#IranRevolution2022 #Iranians #IranProtests2022"
+9,"More than 10 children have been already killed by the government in the past weeks.
+Two innocent kids in danger of execution by the Islamic government of Iran 
+#MahsaAmini 
+#IranProtests2022 
+#Iran https://t.co/iTqzc0yfJj","negative    0.950485
+neutral     0.047427
+positive    0.002088
+dtype: float64","anger       0.569274
+joy         0.012548
+optimism    0.036755
+sadness     0.381424
+dtype: float64","More than 10 children have been already killed by the government in the past weeks.
+Two innocent kids in danger of execution by the Islamic government of Iran 
+#MahsaAmini 
+#IranProtests2022 
+#Iran http"
+10,"Regime merceneries in Iran sent to wipe off Anti-regime slogans written on the walls
+#IranProtests2022 https://t.co/Deob9TrS2t","negative    0.467191
+neutral     0.511383
+positive    0.021426
+dtype: float64","anger       0.906876
+joy         0.009591
+optimism    0.065724
+sadness     0.017809
+dtype: float64","Regime merceneries in Iran sent to wipe off Anti-regime slogans written on the walls
+#IranProtests2022 http"
+11,"Ok. If you think #IranProtests2022 are slowing down, you are wrong. They have arrested anybody and everybody. Still people are showing up. There is no doubt everything has changed. #Mahsa_Amini","negative    0.491398
+neutral     0.441636
+positive    0.066966
+dtype: float64","anger       0.918561
+joy         0.005530
+optimism    0.055083
+sadness     0.020826
+dtype: float64","Ok. If you think #IranProtests2022 are slowing down, you are wrong. They have arrested anybody and everybody. Still people are showing up. There is no doubt everything has changed. #Mahsa_Amini"
+12,We stand with the brave Iranian people. #IranProtests2022 #IranRevoIution2022 #IranProtests #IranRevolution #WomanLifeFreedom,"negative    0.053589
+neutral     0.637701
+positive    0.308710
+dtype: float64","anger       0.504186
+joy         0.040314
+optimism    0.423469
+sadness     0.032031
+dtype: float64",We stand with the brave Iranian people. #IranProtests2022 #IranRevoIution2022 #IranProtests #IranRevolution #WomanLifeFreedom
+13,"#IRGC buried #HamedSalahshur , one of the martyrs of #IranProtests2022 in #Izeh,in a far away place without the permission of his family.
+ His family opened his grave to take their son's body to the family tomb.
+ By opening the grave, they see the his tortured body, https://t.co/1h85RNcTLp","negative    0.602896
+neutral     0.378339
+positive    0.018766
+dtype: float64","anger       0.109333
+joy         0.016261
+optimism    0.030847
+sadness     0.843560
+dtype: float64","#IRGC buried #HamedSalahshur , one of the martyrs of #IranProtests2022 in #Izeh,in a far away place without the permission of his family.
+ His family opened his grave to take their son's body to the family tomb.
+ By opening the grave, they see the his tortured body, http"
+14,"📢#Iranprotests2022
+🚨#IranRevoIution2022 : Dec 2— Iranshahr, SE — #Iran 
+📣""Death to the dictator!"" the locals are chanting, in reference to regime dictator Ali Khamenei.
+#مهسا_امینی
+#اعتراضات_سراسری https://t.co/kN7leb6ZaB","negative    0.61336
+neutral     0.35958
+positive    0.02706
+dtype: float64","anger       0.953430
+joy         0.012940
+optimism    0.017220
+sadness     0.016409
+dtype: float64","📢#Iranprotests2022
+🚨#IranRevoIution2022 : Dec 2— Iranshahr, SE — #Iran 
+📣""Death to the dictator!"" the locals are chanting, in reference to regime dictator Ali Khamenei.
+
+ http"
+15,"#IRGC buried #HamedSalahshur , one of the martyrs of #IranProtests2022 in #Izeh,in a far away place without the permission of his family.
+ His family opened his grave to take their son's body to the family tomb.
+ By opening the grave, they see the child's tortured body, https://t.co/1h85RNuuCX","negative    0.641319
+neutral     0.341719
+positive    0.016962
+dtype: float64","anger       0.085486
+joy         0.015357
+optimism    0.024662
+sadness     0.874495
+dtype: float64","#IRGC buried #HamedSalahshur , one of the martyrs of #IranProtests2022 in #Izeh,in a far away place without the permission of his family.
+ His family opened his grave to take their son's body to the family tomb.
+ By opening the grave, they see the child's tortured body, http"
+16,"Iranians throughout the country united against this cancerous regime of Khamenei.
+#HeWhoShallBeNamed #nika_shakarami #mahsaamini #IranRevoIution2022 #IranProtests2022 #Khamenei  #IranProtests #IranRevoIution
+
+ #نافرمانی_مدنی
+ #زن_زندگی_آزادی 
+#حدیث_نجفی  #مهسا_امینی https://t.co/zi0PRIiVIJ","negative    0.300997
+neutral     0.637658
+positive    0.061346
+dtype: float64","anger       0.908597
+joy         0.009367
+optimism    0.067082
+sadness     0.014954
+dtype: float64","Iranians throughout the country united against this cancerous regime of Khamenei.
+#HeWhoShallBeNamed #nika_shakarami #mahsaamini #IranRevoIution2022 #IranProtests2022 #Khamenei  #IranProtests #IranRevoIution
+
+ 
+  
+   http"
+17,"#Iranprotests2022
+#IranRevoIution2022: Dec 2—Chabahar, SE #Iran 
+Military helicopters have been flying over various parts of Sistan &amp; Baluchistan Province, according to local activists
+Authorities are concerned about a new rise in anti-regime protests
+#مهسا_امینی
+#اعتراضات_سراسری https://t.co/N6V78tvHGw","negative    0.378571
+neutral     0.591536
+positive    0.029893
+dtype: float64","anger       0.651010
+joy         0.033145
+optimism    0.181030
+sadness     0.134815
+dtype: float64","#Iranprotests2022
+#IranRevoIution2022: Dec 2—Chabahar, SE #Iran 
+Military helicopters have been flying over various parts of Sistan &amp; Baluchistan Province, according to local activists
+Authorities are concerned about a new rise in anti-regime protests
+
+ http"
+18,@jedaaal Call to action for Iran #MahsaAmini #Mahsa_Amini #WomanLifeFreedom #NationwideStrikesforIran #IranRevolution #IranProtests2022 #OpIran https://t.co/CwoxgPLeaJ,"negative    0.303628
+neutral     0.658412
+positive    0.037960
+dtype: float64","anger       0.872015
+joy         0.008031
+optimism    0.094232
+sadness     0.025722
+dtype: float64",@user Call to action for Iran #MahsaAmini #Mahsa_Amini #WomanLifeFreedom #NationwideStrikesforIran #IranRevolution #IranProtests2022 #OpIran http
+19,"Iran pushes ahead with death penalties to deter protests
+https://t.co/itpNKVUgyu
+
+@MardinDiplomasi 
+#Iran #IranProtests2022 #MahsaAmini 
+#IranianWomen #IranRevoIution2022","negative    0.469193
+neutral     0.508409
+positive    0.022398
+dtype: float64","anger       0.878384
+joy         0.012862
+optimism    0.069149
+sadness     0.039606
+dtype: float64","Iran pushes ahead with death penalties to deter protests
+http
+
+@user 
+#Iran #IranProtests2022 #MahsaAmini 
+#IranianWomen #IranRevoIution2022"
+20,@Jedaal_tv @jedaaal Call to action for Iran #MahsaAmini #Mahsa_Amini #WomanLifeFreedom #NationwideStrikesforIran #IranRevolution #IranProtests2022 #OpIran https://t.co/jrNfzrzcDA,"negative    0.304592
+neutral     0.658275
+positive    0.037133
+dtype: float64","anger       0.882236
+joy         0.007257
+optimism    0.084572
+sadness     0.025935
+dtype: float64",@user @user Call to action for Iran #MahsaAmini #Mahsa_Amini #WomanLifeFreedom #NationwideStrikesforIran #IranRevolution #IranProtests2022 #OpIran http
+21,Resilience and determination #IranProtests2022 https://t.co/NWZrRjgBRG,"negative    0.024351
+neutral     0.762607
+positive    0.213042
+dtype: float64","anger       0.346233
+joy         0.016406
+optimism    0.583507
+sadness     0.053855
+dtype: float64",Resilience and determination #IranProtests2022 http
+22,"Video: Activists say Mina Yaghoubi, freed after a month in detention, has returned with signs of being beaten
+
+#Iran #IranProtests2022 #MahsaAmini https://t.co/6olO4z46wB","negative    0.500417
+neutral     0.484963
+positive    0.014621
+dtype: float64","anger       0.781927
+joy         0.011633
+optimism    0.042564
+sadness     0.163876
+dtype: float64","Video: Activists say Mina Yaghoubi, freed after a month in detention, has returned with signs of being beaten
+
+#Iran #IranProtests2022 #MahsaAmini http"
+23,"November 30 - Gothenburg, #Sweden
+#Freedom- Rally in support of #IranRevolution2022.
+#IranRevoIution 
+#IranProtests2022 
+#MashaAmini https://t.co/QY7rjxPyL8","negative    0.029014
+neutral     0.782418
+positive    0.188568
+dtype: float64","anger       0.204861
+joy         0.484843
+optimism    0.269212
+sadness     0.041084
+dtype: float64","November 30 - Gothenburg, #Sweden
+#Freedom- Rally in support of #IranRevolution2022.
+#IranRevoIution 
+#IranProtests2022 
+#MashaAmini http"
+24,"FYI, I'll be much happier to sound like @s_m_marandi or @khamenei_ir than CNN, BBC or worse Saudi-funded Iran International. 
+
+#IranProtests2022 https://t.co/qtCsfRZuUv","negative    0.470223
+neutral     0.430326
+positive    0.099452
+dtype: float64","anger       0.559240
+joy         0.174219
+optimism    0.226679
+sadness     0.039861
+dtype: float64","FYI, I'll be much happier to sound like @user or @user than CNN, BBC or worse Saudi-funded Iran International. 
+
+#IranProtests2022 http"

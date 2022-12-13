@@ -1,0 +1,416 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 600px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 0, "label": "mahsaamini", "shape": "dot", "value": 293722.0}, {"color": "#97c2fc", "id": 1, "label": "iranrevolution", "shape": "dot", "value": 179267.0}, {"color": "#97c2fc", "id": 2, "label": "iranprotests2022", "shape": "dot", "value": 126862.0}, {"color": "#97c2fc", "id": 3, "label": "iranprotests", "shape": "dot", "value": 122945.0}, {"color": "#97c2fc", "id": 4, "label": "iran", "shape": "dot", "value": 125369.0}, {"color": "#97c2fc", "id": 5, "label": "opiran", "shape": "dot", "value": 101273.0}, {"color": "#97c2fc", "id": 6, "label": "mahsa_amini", "shape": "dot", "value": 70394.0}, {"color": "#97c2fc", "id": 7, "label": "iranrevolution2022", "shape": "dot", "value": 60821.0}, {"color": "#97c2fc", "id": 8, "label": "oplran", "shape": "dot", "value": 14298.0}, {"color": "#97c2fc", "id": 9, "label": "iranrevoiution2022", "shape": "dot", "value": 22604.0}, {"color": "#97c2fc", "id": 10, "label": "iranrevoiution", "shape": "dot", "value": 20201.0}, {"color": "#97c2fc", "id": 11, "label": "womanlifefreedom", "shape": "dot", "value": 20246.0}, {"color": "#97c2fc", "id": 12, "label": "toomajsalehi", "shape": "dot", "value": 11317.0}, {"color": "#97c2fc", "id": 13, "label": "nikashakarami", "shape": "dot", "value": 19923.0}, {"color": "#97c2fc", "id": 14, "label": "freeiran", "shape": "dot", "value": 17006.0}, {"color": "#97c2fc", "id": 15, "label": "r2pforiran", "shape": "dot", "value": 4124.0}, {"color": "#97c2fc", "id": 16, "label": "iranianwomen", "shape": "dot", "value": 12848.0}, {"color": "#97c2fc", "id": 17, "label": "arashsadeghi", "shape": "dot", "value": 3652.0}, {"color": "#97c2fc", "id": 18, "label": "womenlifefreedom", "shape": "dot", "value": 13645.0}, {"color": "#97c2fc", "id": 19, "label": "mahabad", "shape": "dot", "value": 6853.0}, {"color": "#97c2fc", "id": 20, "label": "zahedan", "shape": "dot", "value": 7697.0}, {"color": "#97c2fc", "id": 21, "label": "tehran", "shape": "dot", "value": 10131.0}, {"color": "#97c2fc", "id": 22, "label": "hadisnajafi", "shape": "dot", "value": 12126.0}, {"color": "#97c2fc", "id": 23, "label": "iranianlivesmatter", "shape": "dot", "value": 13562.0}, {"color": "#97c2fc", "id": 24, "label": "iranian", "shape": "dot", "value": 10019.0}, {"color": "#97c2fc", "id": 25, "label": "sanandaj", "shape": "dot", "value": 7754.0}, {"color": "#97c2fc", "id": 26, "label": "evinprison", "shape": "dot", "value": 6563.0}, {"color": "#97c2fc", "id": 27, "label": "qatar2022", "shape": "dot", "value": 6286.0}, {"color": "#97c2fc", "id": 28, "label": "mahsaami", "shape": "dot", "value": 4766.0}, {"color": "#97c2fc", "id": 29, "label": "iranregimechange", "shape": "dot", "value": 7489.0}, {"color": "#97c2fc", "id": 30, "label": "hosseinronaghi", "shape": "dot", "value": 6848.0}, {"color": "#97c2fc", "id": 31, "label": "evin", "shape": "dot", "value": 6313.0}, {"color": "#97c2fc", "id": 32, "label": "fifaworldcup", "shape": "dot", "value": 5392.0}, {"color": "#97c2fc", "id": 33, "label": "ukraine", "shape": "dot", "value": 7182.0}, {"color": "#97c2fc", "id": 34, "label": "humanrights", "shape": "dot", "value": 7134.0}, {"color": "#97c2fc", "id": 35, "label": "kurdistan", "shape": "dot", "value": 6021.0}, {"color": "#97c2fc", "id": 36, "label": "sharifuniversity", "shape": "dot", "value": 4574.0}, {"color": "#97c2fc", "id": 37, "label": "majidrezarahnavard", "shape": "dot", "value": 1953.0}, {"color": "#97c2fc", "id": 38, "label": "freedom", "shape": "dot", "value": 6824.0}, {"color": "#97c2fc", "id": 39, "label": "kianpirfalak", "shape": "dot", "value": 4208.0}, {"color": "#97c2fc", "id": 40, "label": "irgcterrorists", "shape": "dot", "value": 3964.0}, {"color": "#97c2fc", "id": 41, "label": "irgc", "shape": "dot", "value": 4773.0}, {"color": "#97c2fc", "id": 42, "label": "befairun", "shape": "dot", "value": 2607.0}, {"color": "#97c2fc", "id": 43, "label": "sarinaesmailzadeh", "shape": "dot", "value": 7764.0}, {"color": "#97c2fc", "id": 44, "label": "endiranregime", "shape": "dot", "value": 5774.0}, {"color": "#97c2fc", "id": 45, "label": "nika_shakarami", "shape": "dot", "value": 5479.0}, {"color": "#97c2fc", "id": 46, "label": "javanrud", "shape": "dot", "value": 2962.0}, {"color": "#97c2fc", "id": 47, "label": "saytheirnames", "shape": "dot", "value": 3562.0}, {"color": "#97c2fc", "id": 48, "label": "islamicrepublic", "shape": "dot", "value": 4466.0}, {"color": "#97c2fc", "id": 49, "label": "women_life_freedom", "shape": "dot", "value": 6709.0}, {"color": "#97c2fc", "id": 50, "label": "jinaamini", "shape": "dot", "value": 4331.0}, {"color": "#97c2fc", "id": 51, "label": "woman_life_freedom", "shape": "dot", "value": 4702.0}, {"color": "#97c2fc", "id": 52, "label": "mashaamini", "shape": "dot", "value": 3292.0}, {"color": "#97c2fc", "id": 53, "label": "iranlobby", "shape": "dot", "value": 3512.0}, {"color": "#97c2fc", "id": 54, "label": "javanroud", "shape": "dot", "value": 2132.0}, {"color": "#97c2fc", "id": 55, "label": "zhinaamini", "shape": "dot", "value": 3723.0}, {"color": "#97c2fc", "id": 56, "label": "anonymous", "shape": "dot", "value": 3993.0}, {"color": "#97c2fc", "id": 57, "label": "niac", "shape": "dot", "value": 1829.0}, {"color": "#97c2fc", "id": 58, "label": "mahsaaamini", "shape": "dot", "value": 2740.0}, {"color": "#97c2fc", "id": 59, "label": "women", "shape": "dot", "value": 3792.0}, {"color": "#97c2fc", "id": 60, "label": "freeiran2022", "shape": "dot", "value": 3809.0}, {"color": "#97c2fc", "id": 61, "label": "usa", "shape": "dot", "value": 5274.0}, {"color": "#97c2fc", "id": 62, "label": "khamenei", "shape": "dot", "value": 3273.0}, {"color": "#97c2fc", "id": 63, "label": "nikashakrami", "shape": "dot", "value": 2966.0}, {"color": "#97c2fc", "id": 64, "label": "armitaabbasi", "shape": "dot", "value": 2723.0}, {"color": "#97c2fc", "id": 65, "label": "tiktok", "shape": "dot", "value": 5003.0}, {"color": "#97c2fc", "id": 66, "label": "russia", "shape": "dot", "value": 4051.0}, {"color": "#97c2fc", "id": 67, "label": "sharif_university", "shape": "dot", "value": 1991.0}, {"color": "#97c2fc", "id": 68, "label": "hijab", "shape": "dot", "value": 2750.0}, {"color": "#97c2fc", "id": 69, "label": "womensrights", "shape": "dot", "value": 3368.0}, {"color": "#97c2fc", "id": 70, "label": "samanyasin", "shape": "dot", "value": 1426.0}, {"color": "#97c2fc", "id": 71, "label": "iranians", "shape": "dot", "value": 2732.0}, {"color": "#97c2fc", "id": 72, "label": "elnazrekabi", "shape": "dot", "value": 3903.0}, {"color": "#97c2fc", "id": 73, "label": "unfactfinder", "shape": "dot", "value": 554.0}, {"color": "#97c2fc", "id": 74, "label": "breaking", "shape": "dot", "value": 2537.0}, {"color": "#97c2fc", "id": 75, "label": "news", "shape": "dot", "value": 4727.0}, {"color": "#97c2fc", "id": 76, "label": "iranprotest", "shape": "dot", "value": 3329.0}, {"color": "#97c2fc", "id": 77, "label": "iranianwomenlivesmatter", "shape": "dot", "value": 5010.0}, {"color": "#97c2fc", "id": 78, "label": "sarinaesmaeilzadeh", "shape": "dot", "value": 2813.0}, {"color": "#97c2fc", "id": 79, "label": "engirn", "shape": "dot", "value": 1766.0}, {"color": "#97c2fc", "id": 80, "label": "worldcup", "shape": "dot", "value": 2216.0}, {"color": "#97c2fc", "id": 81, "label": "iranianprotests2022", "shape": "dot", "value": 2420.0}, {"color": "#97c2fc", "id": 82, "label": "ps752", "shape": "dot", "value": 1805.0}, {"color": "#97c2fc", "id": 83, "label": "hoseinronaghi", "shape": "dot", "value": 3195.0}, {"color": "#97c2fc", "id": 84, "label": "zanzendegiazadi", "shape": "dot", "value": 3128.0}, {"color": "#97c2fc", "id": 85, "label": "kurdistanprotests", "shape": "dot", "value": 2243.0}, {"color": "#97c2fc", "id": 86, "label": "toomaj_salehi", "shape": "dot", "value": 1594.0}, {"color": "#97c2fc", "id": 87, "label": "niac_is_not_our_voice", "shape": "dot", "value": 2502.0}, {"color": "#97c2fc", "id": 88, "label": "mahsaamin", "shape": "dot", "value": 1660.0}, {"color": "#97c2fc", "id": 89, "label": "irnusa", "shape": "dot", "value": 1458.0}, {"color": "#97c2fc", "id": 90, "label": "iranrevolution22", "shape": "dot", "value": 4366.0}, {"color": "#97c2fc", "id": 91, "label": "worldcup2022", "shape": "dot", "value": 1706.0}, {"color": "#97c2fc", "id": 92, "label": "jinjiyanazadi", "shape": "dot", "value": 2036.0}, {"color": "#97c2fc", "id": 93, "label": "mek", "shape": "dot", "value": 2110.0}, {"color": "#97c2fc", "id": 94, "label": "baloch", "shape": "dot", "value": 1373.0}, {"color": "#97c2fc", "id": 95, "label": "blacklistirgc", "shape": "dot", "value": 1056.0}, {"color": "#97c2fc", "id": 96, "label": "world", "shape": "dot", "value": 3594.0}, {"color": "#97c2fc", "id": 97, "label": "isfahan", "shape": "dot", "value": 2004.0}, {"color": "#97c2fc", "id": 98, "label": "un", "shape": "dot", "value": 1511.0}, {"color": "#97c2fc", "id": 99, "label": "shiraz", "shape": "dot", "value": 1017.0}, {"color": "#97c2fc", "id": 100, "label": "hadis_najafi", "shape": "dot", "value": 2558.0}, {"color": "#97c2fc", "id": 101, "label": "voriaghafouri", "shape": "dot", "value": 940.0}, {"color": "#97c2fc", "id": 102, "label": "berlin", "shape": "dot", "value": 1597.0}, {"color": "#97c2fc", "id": 103, "label": "hossein_ronaghi", "shape": "dot", "value": 1513.0}, {"color": "#97c2fc", "id": 104, "label": "stophazaragenocide", "shape": "dot", "value": 949.0}, {"color": "#97c2fc", "id": 105, "label": "iranprorests2022", "shape": "dot", "value": 1605.0}, {"color": "#97c2fc", "id": 106, "label": "iranreveloution", "shape": "dot", "value": 1112.0}, {"color": "#97c2fc", "id": 107, "label": "womensrightsarehumanrights", "shape": "dot", "value": 1772.0}, {"color": "#97c2fc", "id": 108, "label": "helpiran", "shape": "dot", "value": 2215.0}, {"color": "#97c2fc", "id": 109, "label": "niaclobbies4mullahs", "shape": "dot", "value": 2380.0}, {"color": "#97c2fc", "id": 110, "label": "iranrevulotion", "shape": "dot", "value": 1464.0}, {"color": "#97c2fc", "id": 111, "label": "eu", "shape": "dot", "value": 3185.0}, {"color": "#97c2fc", "id": 112, "label": "no_to_islamicrepublic", "shape": "dot", "value": 1727.0}, {"color": "#97c2fc", "id": 113, "label": "arash_sadeghi", "shape": "dot", "value": 366.0}, {"color": "#97c2fc", "id": 114, "label": "yashartohidi", "shape": "dot", "value": 457.0}, {"color": "#97c2fc", "id": 115, "label": "shervinhajipour", "shape": "dot", "value": 1693.0}, {"color": "#97c2fc", "id": 116, "label": "asrapanahi", "shape": "dot", "value": 1930.0}, {"color": "#97c2fc", "id": 117, "label": "sarina_esmailzadeh", "shape": "dot", "value": 2104.0}, {"color": "#97c2fc", "id": 118, "label": "khodanourlajaei", "shape": "dot", "value": 2017.0}, {"color": "#97c2fc", "id": 119, "label": "izeh", "shape": "dot", "value": 901.0}, {"color": "#97c2fc", "id": 120, "label": "qatarworldcup2022", "shape": "dot", "value": 1263.0}, {"color": "#97c2fc", "id": 121, "label": "canada", "shape": "dot", "value": 2289.0}, {"color": "#97c2fc", "id": 122, "label": "revolution", "shape": "dot", "value": 1955.0}, {"color": "#97c2fc", "id": 123, "label": "iranuprising", "shape": "dot", "value": 1117.0}, {"color": "#97c2fc", "id": 124, "label": "balochistan", "shape": "dot", "value": 862.0}, {"color": "#97c2fc", "id": 125, "label": "vpn", "shape": "dot", "value": 3804.0}, {"color": "#97c2fc", "id": 126, "label": "erfanzamani", "shape": "dot", "value": 397.0}, {"color": "#97c2fc", "id": 127, "label": "remembertheirnames", "shape": "dot", "value": 3786.0}, {"color": "#97c2fc", "id": 128, "label": "dontbeafraid", "shape": "dot", "value": 3772.0}, {"color": "#97c2fc", "id": 129, "label": "piranshahr", "shape": "dot", "value": 1371.0}, {"color": "#97c2fc", "id": 130, "label": "armita_abbasi", "shape": "dot", "value": 1620.0}, {"color": "#97c2fc", "id": 131, "label": "qatar", "shape": "dot", "value": 1133.0}, {"color": "#97c2fc", "id": 132, "label": "stopexecutionsiniran", "shape": "dot", "value": 1288.0}, {"color": "#97c2fc", "id": 133, "label": "zahedanmassacre", "shape": "dot", "value": 1203.0}, {"color": "#97c2fc", "id": 134, "label": "worldcupqatar2022", "shape": "dot", "value": 1158.0}, {"color": "#97c2fc", "id": 135, "label": "european", "shape": "dot", "value": 3164.0}, {"color": "#97c2fc", "id": 136, "label": "khash", "shape": "dot", "value": 774.0}, {"color": "#97c2fc", "id": 137, "label": "unitednations", "shape": "dot", "value": 1243.0}, {"color": "#97c2fc", "id": 138, "label": "fifaworldcupqatar2022", "shape": "dot", "value": 1068.0}, {"color": "#97c2fc", "id": 139, "label": "freetoomaj", "shape": "dot", "value": 1068.0}, {"color": "#97c2fc", "id": 140, "label": "iranianrevolution", "shape": "dot", "value": 1955.0}, {"color": "#97c2fc", "id": 141, "label": "marivan", "shape": "dot", "value": 705.0}, {"color": "#97c2fc", "id": 142, "label": "kian_pirfalak", "shape": "dot", "value": 1274.0}, {"color": "#97c2fc", "id": 143, "label": "sosiran", "shape": "dot", "value": 1106.0}, {"color": "#97c2fc", "id": 144, "label": "ps752justice", "shape": "dot", "value": 1035.0}, {"color": "#97c2fc", "id": 145, "label": "mahsa", "shape": "dot", "value": 1470.0}, {"color": "#97c2fc", "id": 146, "label": "karaj", "shape": "dot", "value": 971.0}, {"color": "#97c2fc", "id": 147, "label": "bloodynovember", "shape": "dot", "value": 904.0}, {"color": "#97c2fc", "id": 148, "label": "iranprotest2022", "shape": "dot", "value": 1556.0}, {"color": "#97c2fc", "id": 149, "label": "tabriz", "shape": "dot", "value": 1237.0}]);
+                  edges = new vis.DataSet([{"from": 0, "to": 1, "value": 49157.0}, {"from": 0, "to": 2, "value": 28556.0}, {"from": 0, "to": 3, "value": 21129.0}, {"from": 0, "to": 4, "value": 22397.0}, {"from": 0, "to": 5, "value": 34326.0}, {"from": 0, "to": 6, "value": 9902.0}, {"from": 0, "to": 7, "value": 13072.0}, {"from": 0, "to": 8, "value": 4896.0}, {"from": 0, "to": 9, "value": 5340.0}, {"from": 0, "to": 10, "value": 6057.0}, {"from": 0, "to": 11, "value": 4897.0}, {"from": 0, "to": 12, "value": 4512.0}, {"from": 0, "to": 13, "value": 4171.0}, {"from": 0, "to": 14, "value": 3160.0}, {"from": 0, "to": 15, "value": 3277.0}, {"from": 0, "to": 17, "value": 2013.0}, {"from": 0, "to": 18, "value": 2329.0}, {"from": 0, "to": 19, "value": 1992.0}, {"from": 0, "to": 20, "value": 2028.0}, {"from": 0, "to": 21, "value": 1703.0}, {"from": 0, "to": 22, "value": 2120.0}, {"from": 0, "to": 23, "value": 1853.0}, {"from": 0, "to": 25, "value": 1963.0}, {"from": 0, "to": 26, "value": 1507.0}, {"from": 0, "to": 27, "value": 1674.0}, {"from": 0, "to": 30, "value": 1887.0}, {"from": 1, "to": 2, "value": 11313.0}, {"from": 1, "to": 3, "value": 16785.0}, {"from": 1, "to": 4, "value": 18325.0}, {"from": 1, "to": 5, "value": 12571.0}, {"from": 1, "to": 6, "value": 8779.0}, {"from": 1, "to": 7, "value": 5209.0}, {"from": 1, "to": 11, "value": 3033.0}, {"from": 1, "to": 12, "value": 1587.0}, {"from": 1, "to": 13, "value": 1781.0}, {"from": 1, "to": 14, "value": 2409.0}, {"from": 1, "to": 29, "value": 1531.0}, {"from": 2, "to": 3, "value": 7982.0}, {"from": 2, "to": 4, "value": 13286.0}, {"from": 2, "to": 5, "value": 12647.0}, {"from": 2, "to": 6, "value": 10166.0}, {"from": 2, "to": 7, "value": 6846.0}, {"from": 2, "to": 9, "value": 2306.0}, {"from": 2, "to": 10, "value": 1575.0}, {"from": 2, "to": 16, "value": 1675.0}, {"from": 2, "to": 23, "value": 1605.0}, {"from": 3, "to": 4, "value": 15660.0}, {"from": 3, "to": 5, "value": 6435.0}, {"from": 3, "to": 6, "value": 6559.0}, {"from": 3, "to": 7, "value": 6498.0}, {"from": 3, "to": 9, "value": 2309.0}, {"from": 3, "to": 10, "value": 2441.0}, {"from": 3, "to": 14, "value": 1608.0}, {"from": 3, "to": 16, "value": 1504.0}, {"from": 3, "to": 29, "value": 1683.0}, {"from": 4, "to": 5, "value": 4938.0}, {"from": 4, "to": 6, "value": 4687.0}, {"from": 4, "to": 7, "value": 6815.0}, {"from": 4, "to": 9, "value": 1880.0}, {"from": 4, "to": 10, "value": 1804.0}, {"from": 5, "to": 6, "value": 5242.0}, {"from": 5, "to": 7, "value": 2968.0}, {"from": 6, "to": 7, "value": 2310.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"borderWidth": 2, "opacity": 0.8, "font": {"size": 12, "strokeWidth": 6}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -20, "centralGravity": 0.025, "springLength": 100, "damping": 0.9}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
